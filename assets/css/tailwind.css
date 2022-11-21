@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: rgb(43, 143, 182);
+  --secondary-color: rgb(94, 87, 87);
+}
+
+@layer components {
+  .btn {
+    @apply py-1.5 px-2 border border-gray-200 rounded-lg inline-block bg-gray-600 transition hover:scale-105;
+  }
+
+  .btn-success {
+    @apply btn  bg-green-600 ;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary
+  }
+}
