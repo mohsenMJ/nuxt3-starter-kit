@@ -2,6 +2,6 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
-    // '@nuxt/image',
+    // '@nuxt/image', // for the next time add this to the project
   ],
 })
