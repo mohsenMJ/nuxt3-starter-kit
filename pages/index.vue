@@ -1,3 +1,5 @@
+<script setup>
+</script>
 <template>
   <nuxt-layout>
     <div class="h-screen w-100 grid place-items-center">
