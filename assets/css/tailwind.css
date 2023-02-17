@@ -2,21 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  --primary-color: rgb(43, 143, 182);
-  --secondary-color: rgb(94, 87, 87);
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --dark-color: #000;
+    --light-color: #fff;
+
 }
 
 @layer components {
-  .btn {
-    @apply py-1.5 px-2 border border-gray-200 rounded-lg inline-block bg-gray-600 transition hover:scale-105;
-  }
+    .btn {
+        @apply py-1.5 px-2 border border-gray-200 rounded-lg inline-block bg-gray-600 transition hover:scale-105;
+    }
 
-  .btn-success {
-    @apply btn  bg-green-600 ;
-  }
+    .btn-success {
+        @apply btn  text-white bg-success  text-white;
+    }
 
-  .btn-primary {
-    @apply btn bg-primary
-  }
+    .btn-primary {
+        @apply btn bg-primary text-white
+    }
 }
+  
