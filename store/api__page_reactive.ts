@@ -1,11 +1,11 @@
 import {reactive} from 'vue';
 import {Configuration, HUSAAPIsApiFactory, HUSAAPIsApiFp, PageApiFactory} from "~/api";
-import {ApiConfiguration} from "~/utils/apiConfiguration";
+import {useApiConfiguration} from "~/composables/useApiConfiguration";
 
 export const api__page_reactive = reactive({
     loading: false,
     all: <any>[],
-    config: ApiConfiguration,
+    config: useApiConfiguration,
 
     startLoading() {
         this.loading = true;
