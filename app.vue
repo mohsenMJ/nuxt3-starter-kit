@@ -3,7 +3,16 @@
         <NuxtPage/>
     </NuxtLayout>
 </template>
+
 <style>
+
+html{
+    @apply h-full bg-gray-100
+}
+body{
+    @apply h-full
+}
+
 .page-enter-active,
 .page-leave-active {
     /*transition: all 0.1s;*/
