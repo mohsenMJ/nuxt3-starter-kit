@@ -8,12 +8,8 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 const open = computed({
-    get() {
-        return props.modelValue
-    },
-    set(newValue) {
-        emit('update:modelValue', newValue)
-    }
+    get: () => props.modelValue,
+    set: (newValue) => emit('update:modelValue', newValue)
 })
 </script>
 <template>
