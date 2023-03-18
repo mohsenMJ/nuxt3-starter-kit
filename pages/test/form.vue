@@ -1,9 +1,10 @@
 <template>
     <page>
-        <div class="max-w-lg">
+        <div class="lg:max-w-lg">
             <card>
-                <form-x-input v-model="url" @update:prefix="prefixedUrl = $event" label="Website" prefix="https://"/>
-                <form-x-textarea v-model="url" label="Website" prefix="https://"/>
+<!--                <form-input label="Text" v-model="url" @update:prefix="prefixedUrl = $event" label="Website" prefix="https://"/>-->
+<!--                <form-input label="Text" v-model="url" @update:prefix="prefixedUrl = $event" label="Website" prefix="https://"/>-->
+                <form-textarea v-model="url" label="Website" prefix="https://"/>
 
                 <p>url typed : {{ url }} </p>
                 <p>url+prefix  : {{ prefixedUrl }}</p>

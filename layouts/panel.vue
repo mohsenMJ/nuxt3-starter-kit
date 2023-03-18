@@ -4,7 +4,7 @@
         <div class="flex flex-1 flex-col md:pl-64">
             <panel-header v-model="sidebarOpen"/>
             <main class="flex-1">
-                <slot/> <!-- here is the place where pages can load -->
+                <slot/>
             </main>
         </div>
     </div>
