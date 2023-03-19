@@ -1,6 +1,6 @@
 <template>
-    <TransitionRoot as="template" :show="value">
-        <Dialog as="div" class="relative z-40 md:hidden" @close="value = false">
+    <TransitionRoot as="template" :show="open">
+        <Dialog as="div" class="relative z-40 " @close="open = false">
             <TransitionChild as="template" enter="transition-opacity ease-linear duration-300"
                              enter-from="opacity-0" enter-to="opacity-100"
                              leave="transition-opacity ease-linear duration-300" leave-from="opacity-100"
@@ -20,7 +20,7 @@
                             <div class="absolute top-0 right-0 -mr-12 pt-2">
                                 <button type="button"
                                         class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                                        @click="value = false">
+                                        @click="open = false">
                                     <span class="sr-only">Close sidebar</span>
                                     <XMarkIcon class="h-6 w-6 text-white" aria-hidden="true"/>
                                 </button>
@@ -33,13 +33,14 @@
                         </div>
                         <div class="mt-5 h-0 flex-1 overflow-y-auto">
                             <nav class="space-y-1 px-2">
-                                <a v-for="item in navigation" :key="item.name" :href="item.href"
-                                   :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
+                                <nuxt-link v-for="item in navigation" :key="item.name" :to="item.href"
+                                           @click="close"
+                                           :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']">
                                     <component :is="item.icon"
                                                :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-4 flex-shrink-0 h-6 w-6']"
                                                aria-hidden="true"/>
                                     {{ item.name }}
-                                </a>
+                                </nuxt-link>
                             </nav>
                         </div>
                     </DialogPanel>
@@ -52,7 +53,7 @@
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col ">
+    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col " v-if="!hideSidebar">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5 custom-scrollbar">
             <div class="flex flex-shrink-0 items-center px-4">
@@ -62,7 +63,7 @@
             <div class="mt-5 flex flex-grow flex-col">
                 <nav class="flex-1 space-y-1 px-2 pb-4">
                     <nuxt-link v-for="item in navigation" :key="item.name" :to="item.href"
-                       :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
+                               :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group flex items-center px-2 py-2 text-sm font-medium rounded-md']">
                         <component :is="item.icon"
                                    :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']"
                                    aria-hidden="true"/>
@@ -93,20 +94,23 @@ import {
 } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
-    modelValue : {
-        type : Boolean , default : false
-    }
+    modelValue: {type: Boolean, default: false},
+    showStatic: {type: Boolean, default: true}
 })
 const emit = defineEmits(['update:modelValue'])
 
-const value = computed({
+const open = computed({
     get() {
         return props.modelValue
     },
     set(newValue) {
-        emit('update:modelValue' , newValue)
+        emit('update:modelValue', newValue)
     }
 })
+
+function close() {
+    open.value = false;
+}
 
 const navigation = [
     {name: 'Dashboard', href: '/', icon: HomeIcon, current: true},
@@ -116,4 +120,10 @@ const navigation = [
     {name: 'Documents', href: '/', icon: InboxIcon, current: false},
     {name: 'Reports', href: '/', icon: ChartBarIcon, current: false},
 ]
+
+const route = useRoute();
+
+const hideSidebar = computed(() => {
+    return route.meta?.sidebar === false;
+})
 </script>

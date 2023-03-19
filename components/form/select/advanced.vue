@@ -53,7 +53,7 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
 import {computed} from "vue";
 
 const props = defineProps({
-    modelValue: {type: String, default: ''},
+    modelValue: {type: Object, default: () => {}},
     label: {type: String, default: ''},
     placeholder: {type: String, default: 'Enter Value'},
     prefix: {type: String, default: ''},

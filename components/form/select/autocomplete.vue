@@ -11,13 +11,15 @@
                 <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true"/>
             </ComboboxButton>
 
-            <ComboboxOptions v-if="selectedItems.length > 0"
-                             class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <ComboboxOptions
+                class="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 
-                <div v-if="selectedItems.length === 0 && query !== ''"
-                     class="relative cursor-default select-none py-2 px-4 text-gray-700">
-                    Nothing found.
-                </div>
+                <slot name="notFound">
+                    <div v-if="selectedItems.length === 0 && query !== ''"
+                         class="relative cursor-default select-none py-2 px-4 text-gray-700">
+                        Nothing found.
+                    </div>
+                </slot>
 
                 <ComboboxOption v-for="item in selectedItems" :key="item.id" :value="item" as="template"
                                 v-slot="{ active, selected }">
@@ -54,7 +56,7 @@ import {
 
 
 const props = defineProps({
-    modelValue: {type: String, default: ''},
+    modelValue: {type: Object, default: () => {}},
     label: {type: String, default: ''},
     placeholder: {type: String, default: 'Enter Value'},
     prefix: {type: String, default: ''},
@@ -64,7 +66,10 @@ const props = defineProps({
     itemTitle: {type: String, default: ''},
     itemValue: {type: String | null, default: null},
     displayValue: {type: Function, default: (item) => item?.name},
-    filter: {type: Function, default: () => {}},
+    filter: {
+        type: Function, default: () => {
+        }
+    },
 
 })
 const emit = defineEmits(['update:modelValue'])

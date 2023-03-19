@@ -7,15 +7,17 @@
             <!-- Replace with your content -->
             <div class="py-4">
                 Welcome to form pages
-                <card>
+                <card class="grid grid-cols-2 gap-2">
                     <form-input label="Text" v-model="text"/>
                     <form-input key="a" label="Text" prefix="prefix:" v-model="text"/>
                     <form-textarea label="Text" prefix="prefix:" v-model="text"/>
                     <form-select label="Text" :items="list" v-model="country"/>
                     <form-select label="Text" :items="list" item-title="key" v-model="country"/>
+
                     <form-select label="Text" :items="list" v-model="country">
                         <template v-slot="{item}">{{ item.title + ' - v2 ' }}</template>
                     </form-select>
+
                     <p>you have selected {{ country }}</p>
 
                     <hr>
@@ -48,14 +50,12 @@
 
                     </form-select-advanced>
                     <form-select-advanced label="Advanced Select" v-model="selectedPerson" :items="people">
-
                         <template #selected="{ selected }">
                             <div class="flex items-center">
                                 <img :src="selected.avatar" alt="" class="h-6 w-6 flex-shrink-0 rounded-full"/>
                                 <span class="ml-3 block truncate">{{ selected.name }}</span>
                             </div>
                         </template>
-
                         <template #option="{ item , active , selected }">
                             <div class="flex items-center">
                                 <img :src="item.avatar" alt="" class="h-6 w-6 flex-shrink-0 rounded-full"/>
@@ -64,7 +64,6 @@
                                 </span>
                             </div>
                         </template>
-
                     </form-select-advanced>
                     <pre>{{ selectedPerson }}</pre>
 
@@ -72,7 +71,7 @@
                     <hr>
 
                     <form-select-autocomplete v-model="selectedPerson" :items="people" label="Autocompolete Field" />
-                    {{selectedPerson}}
+                    <pre>{{selectedPerson}}</pre>
                     <div class="h-96"></div>
 
                 </card>
