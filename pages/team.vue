@@ -19,6 +19,6 @@ import {useAppSetting} from "~/store/useAppSetting";
 
 definePageMeta({
     layout: 'panel',
-    sidebar : false
+    // sidebar : false
 })
 </script>
