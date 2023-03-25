@@ -14,15 +14,15 @@
 
                 <div class="row ">
                     <button class="btn">
-                        <ClockIcon class="h-5 w-5"/>
+                        <ClockIcon class="icon"/>
                         <span>History</span>
                     </button>
                     <button class="btn">
-                        <PlayCircleIcon class="h-5 w-5 text-blue-500"/>
+                        <PlayCircleIcon class="icon"/>
                         <span>Preview</span>
                     </button>
-                    <button class="btn-primary">
-                        <BookmarkIcon class="icon h-5 w-5"/>
+                    <button class="btn-primary" @click="save">
+                        <BookmarkIcon class="icon"/>
                         <span>Save Page</span>
                     </button>
                 </div>
@@ -35,14 +35,24 @@
 
 </template>
 
-<script setup>
-import {ref} from 'vue';
-import {XMarkIcon, ArrowPathIcon, PlayCircleIcon, ClockIcon , BookmarkIcon} from "@heroicons/vue/24/outline";
+<script setup lang="ts">
+import {onMounted, ref} from 'vue';
+import {XMarkIcon, ArrowPathIcon, PlayCircleIcon, ClockIcon, BookmarkIcon} from "@heroicons/vue/24/outline";
+import {useBlockLoader} from "../composables/useBlockLoader";
 
 const blocks = ref([])
 
-// definePageMeta({
-// layout: 'panel',
-// sidebar : false
-// })
+function save() {
+    localStorage.setItem('blocks', JSON.stringify(blocks.value.map((b: any) => {
+        let {component, ...block} = b;
+        return block;
+    })));
+}
+
+onMounted(() => {
+    blocks.value = JSON.parse(localStorage.getItem('blocks') || "[]")
+        .map((block: any) => {
+            return {...block, component: useBlockLoader(block.name)} // load components dynamically
+        })
+})
 </script>

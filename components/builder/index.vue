@@ -3,8 +3,6 @@
     <div class="flex gap-3 max-h-[87vh]">
         <div class=" flex-1">
             <div class="rounded-lg p-2 bg-white shadow space-y-2 overflow-y-auto custom-scrollbar max-h-full">
-
-
                 <builder-blocks-container v-for="(block , index) in blocks" :key="block.name + block.id + '_' + index"
                                           :block="block" @click="selectBlock(block)"
                                           @delete="deleteBlock(index)"
@@ -12,25 +10,18 @@
                                           @move-up="moveUpBlock(index)"
                                           @move-down="moveDownBlock(index)">
                     <component :is="block.component" v-model="block.structure"/>
+                    <!--                    <NuxtDynamic  :name="block.name" v-model="block.structure"/>-->
                 </builder-blocks-container>
-
                 <builder-blocks-drop/>
             </div>
-
         </div>
-
         <div class=" rounded-lg w-72 bg-white shadow p-2.5 overflow-y-auto custom-scrollbar max-h-full">
-
             <builder-structure-editor
                 v-if="data.selectedBlock.hasOwnProperty('id')"
                 v-model="data.selectedBlock"
                 @close="closeEditor"
             />
-
             <builder-selector v-else @addBlock="addBlock"/>
-<!--            <div v-else>-->
-<!--                <button class="btn" @click="addSampleBlock">Add Component</button>-->
-<!--            </div>-->
         </div>
     </div>
 </template>
@@ -38,8 +29,7 @@
 <script setup lang="ts">
 import {computed, defineAsyncComponent, reactive} from "vue";
 import {BlockInterface} from "~/interfaces/BlockInterface";
-import {BLOCKS} from "~/data/blocks";
-import Builder from "~/pages/builder.vue";
+import {useBlockLoader} from "~/composables/useBlockLoader";
 
 let data = reactive({
     selectedBlock: {}
@@ -56,21 +46,23 @@ const emit = defineEmits(['update:modelValue'])
 
 const blocks = computed({
     get: () => props.modelValue,
+    // get: () => props.modelValue.map((block: any) => {
+    //     return {
+    //         ...block,
+    //         component: defineAsyncComponent(() => import("./blocks/" + block.name + '.vue'))
+    //     }
+    // }),
     set: (newValue) => emit('update:modelValue', newValue)
 });
 
-function addSampleBlock() {
-    addBlock({
-        id: 0,
-        name: 'Sample',
-        title: 'Sample Component',
-        image: 'https://assets.hisense-usa.com/assets/ContentBuilderImages/39f6c6b03f/content_dp-beautiful-screen-min-clikhq.png',
-    })
-}
-
 function addBlock(block: any, position: number = -1) {
-    const component = defineAsyncComponent(() => import("./blocks/" + block.name + '.vue'));
-    let newBlock = {structure: {}, ...block, id: blocks.value.length + 1, selected: false, component}
+    let newBlock = {
+        structure: {},
+        ...block,
+        id: blocks.value.length + 1,
+        selected: false,
+        component: useBlockLoader(block.name)
+    }
     if (position < 0) blocks.value.push(newBlock)
     else blocks.value.splice(position + 1, 0, newBlock);
 }

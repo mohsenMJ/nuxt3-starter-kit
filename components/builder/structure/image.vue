@@ -1,6 +1,5 @@
 <template>
     Image Manager will be here soon
-<!--    <form-input :label="item.title" v-model="item.value"/>-->
 </template>
 
 <script setup lang="ts">
