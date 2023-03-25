@@ -1,8 +1,14 @@
 <template>
     <div class="space-y-4">
-        <h4 class="font-semibold">{{ block.name }}</h4>
-        <!--        <pre>{{structureKeys}}</pre>-->
-        <component v-for="(item , index) in structureKeys" :key="index" :is="item.component"
+        <div class="row justify-between">
+            <h4 class="font-semibold">{{ block.name }}</h4>
+            <button @click="close">
+                <XMarkIcon class="w-5 h-5"/>
+            </button>
+        </div>
+        <component v-for="(item , index) in structureKeys"
+                   :key="index"
+                   :is="item.component"
                    v-model="block.structure[item.key]"/>
     </div>
 </template>
@@ -10,6 +16,7 @@
 <script setup lang="ts">
 import {computed, defineAsyncComponent} from "vue";
 import {BlockInterface} from "~/interfaces/BlockInterface";
+import {XMarkIcon} from "@heroicons/vue/24/outline";
 import {StructureTypeEnum} from "~/interfaces/StructureTypeEnum";
 import {BuilderStructureString, BuilderStructureText} from "#components";
 
@@ -22,7 +29,7 @@ const props = defineProps({
     }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'close'])
 
 const block = computed({
     get: () => props.modelValue,
@@ -40,22 +47,12 @@ const structureKeys = computed(() => {
                 return {
                     key: i[0],
                     component: defineAsyncComponent(() => import("./" + i[1].type + '.vue')),
-                    // component: getComponent(i[1].type)
                 }
             })
         : [];
 });
 
-// function getComponent(type: string) {
-//     let component: any = null;
-//     switch (type as StructureTypeEnum) {
-//         case StructureTypeEnum.String:
-//             component = BuilderStructureString;
-//             break;
-//         case StructureTypeEnum.Text :
-//             component = BuilderStructureText;
-//             break;
-//     }
-//     return component
-// }
+function close() {
+    emit('close', true);
+}
 </script>
