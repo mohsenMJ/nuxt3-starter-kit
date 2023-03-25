@@ -1,23 +1,45 @@
 <template>
-    <div class="py-6">
-        <div class="mx-auto max-w-9xl px-4 sm:px-6 md:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900">Page Builder</h1>
-            <nuxt-link class="text-primary" to="/"> Go Back</nuxt-link>
-        </div>
-        <div class="mx-auto max-w-9xl px-4 sm:px-6 md:px-8">
-            <!-- Replace with your content -->
-            <div class="py-4 flex gap-3">
-                <div class="h-96 rounded-lg border-4 border-dashed border-gray-200 flex-1"/>
-                <div class="h-96 rounded-lg border-4 border-dashed border-gray-200 w-72"/>
+    <div class="h-16 bg-white shadow ">
+        <div class="container mx-auto h-full flex items-center justify-between">
+            <div class="row">
+                <button @click="$router.push('/')">
+                    <XMarkIcon class="w-8 h-8"/>
+                </button>
+                <div>
+                    <h1 class="text-lg font-semibold text-gray-900">Page Builder</h1>
+                    <h4 class="text-base text-gray-400">Products</h4>
+                </div>
             </div>
-            <!-- /End replace -->
+
+            <div class="row ">
+                <button class="btn">
+                    <ClockIcon class="h-5 w-5"/>
+                    <span>History</span>
+                </button>
+                <button class="btn">
+                    <PlayCircleIcon class="h-5 w-5 text-blue-500"/>
+                    <span>Preview</span>
+                </button>
+                <button class="btn-primary">
+                    <ArrowPathIcon class="icon h-5 w-5"/>
+                    <span>Save Page</span>
+                </button>
+            </div>
         </div>
+    </div>
+    <div class="p-4">
+        <builder v-model="blocks"/>
     </div>
 </template>
 
 <script setup>
+import {ref} from 'vue';
+import {XMarkIcon, ArrowPathIcon, PlayCircleIcon, ClockIcon} from "@heroicons/vue/24/outline";
+
+const blocks = ref([])
+
 // definePageMeta({
-    // layout: 'panel',
-    // sidebar : false
+// layout: 'panel',
+// sidebar : false
 // })
 </script>

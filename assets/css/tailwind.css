@@ -15,8 +15,12 @@
 }
 
 @layer components {
+    .row{
+        @apply flex items-center gap-1.5
+    }
+
     .btn {
-        @apply py-1.5 px-2 border border-gray-200 rounded-lg inline-block bg-gray-600 transition hover:scale-105;
+        @apply row py-1.5 px-2 border border-gray-200 rounded-lg bg-white text-gray-700 ;
     }
 
     .btn-success {
@@ -27,10 +31,15 @@
         @apply btn bg-primary text-white
     }
 
+    .btn-primary > .icon{
+        @apply text-white
+    }
 
     .custom-scrollbar{
         @apply scrollbar scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100
     }
+
+
 }
 
 @layer utilities{
